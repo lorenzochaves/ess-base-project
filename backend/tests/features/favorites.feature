@@ -29,3 +29,30 @@ Scenario: Visualizar lista de pratos favoritos
     Then o sistema exibe a lista com os pratos favoritados:
         | Lasanha de Frango   |
         | Risoto de Cogumelos |
+
+Scenario: Adicionar prato duplicado aos favoritos
+    Given o usuário "Alan" está autenticado no sistema
+    And o prato "Lasanha de Frango" já está na lista de favoritos
+    When o usuário clica novamente no ícone "Favoritar" associado ao prato
+    Then o sistema não permite a duplicação
+    And uma mensagem "Este prato já está nos seus favoritos" é exibida.
+
+Scenario: Limpar todos os pratos da lista de favoritos
+    Given o usuário "Alan" está autenticado no sistema
+    And existem pratos na lista de favoritos:
+        | Prato               |
+        | Lasanha de Frango   |
+        | Risoto de Cogumelos |
+    When o usuário clica na opção "Limpar Favoritos"
+    Then o sistema remove todos os pratos da lista de favoritos
+    And exibe uma mensagem "Sua lista de favoritos foi limpa com sucesso"
+    And a lista de favoritos fica vazia.
+
+Scenario: Favoritar prato enquanto navega por categorias
+    Given o usuário "Alan" está autenticado no sistema
+    And o usuário está navegando na categoria "Veganos"
+    And o prato "Risoto de Cogumelos" está listado na página
+    When o usuário clica no ícone "Favoritar" associado ao prato "Risoto de Cogumelos"
+    Then o prato "Risoto de Cogumelos" é adicionado à lista de favoritos
+    And o sistema exibe o ícone "❤️ Favoritado" no prato
+    And exibe a mensagem "Prato adicionado aos favoritos com sucesso".
