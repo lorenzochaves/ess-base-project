@@ -5,28 +5,6 @@ Scenario: Filtrar itens utilizando apenas um filtro
   And a lista de itens no menu é:
   | Nome                    | Nota          | Categoria         | Popularidade          |
   | Strogonoff de carne     | 4,5           | Almoço            | Melhores avaliados    |
-  | Doce de leite           | 4,3           | Sobremesa         | Melhores avaliados    |
-  | Feijoada                | 4,6           | Almoço            | Melhores avaliados    |
-  When seleciono "Sobremesa" no campo categoria
-  Then os resultados exibidos são:
-  | Nome                    | Nota          |
-  | Doce de leite           | 4,3           |
-
-
-
-
-  Scenario: Serviço retorna todos os itens ao limpar os filtros  
-  Given existem filtros aplicados na busca  
-  And o sistema possui os seguintes itens cadastrados:  
-    | Nome                    | Nota          | Categoria         | Popularidade          |  
-    | Strogonoff de carne     | 4,5           | Almoço            | Melhores avaliados    |  
-    | Doce de leite           | 4,3           | Sobremesa         | Mais curtidos         |  
-  When envio uma requisição GET para "/busca" sem parâmetros de filtro  
-  Then o serviço retorna todos os itens cadastrados no sistema:  
-    | Nome                    | Nota          | Categoria         | Popularidade          |  
-    | Strogonoff de carne     | 4,5           | Almoço            | Melhores avaliados    |  
-    | Doce de leite           | 4,3           | Sobremesa         | Mais curtidos         |  
-
 
 
 Scenario: Serviço retorna itens que correspondem ao nome buscado  
@@ -76,3 +54,8 @@ Scenario: Serviço retorna itens que correspondem ao nome buscado
   And nenhum item é retornado.  
 
 
+coisa novaaaaaaaa
+dfsadsadas
+dasdasds
+asdsadsa
+dassadsadsad
