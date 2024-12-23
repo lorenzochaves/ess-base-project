@@ -49,3 +49,41 @@ Scenario: Visualização do relatório de categorias mais acessadas no mês
             "periodo": "mensal"
         }
         """
+
+Scenario: Falha ao gerar relatório sem dados disponíveis
+    Given o administrador "Alyson" está autenticado no sistema
+    And não existem registros de acessos nas categorias para o período solicitado
+    When o administrador faz uma requisição "GET" para "/relatorios/mais-acessados" com os seguintes parâmetros:
+        | período | semanal |
+    Then o status da resposta deve ser "404"
+    And o JSON da resposta deve conter:
+        """
+        { "error": "Nenhum dado disponível para o período selecionado" }
+        """
+
+Scenario: Filtrar relatório por categoria específica
+    Given o administrador "Alyson" está autenticado no sistema
+    And existem as seguintes categorias com dados de acesso:
+        | Categoria  | Acessos |
+        | Sobremesas | 500     |
+        | Carnes     | 350     |
+    When o administrador faz uma requisição "GET" para "/relatorios/mais-acessados" com os parâmetros:
+        | filtro     | Carnes  |
+    Then o status da resposta deve ser "200"
+    And o JSON da resposta deve conter:
+        """
+        {
+            "relatorio": [
+                { "categoria": "Carnes", "acessos": 350 }
+            ]
+        }
+        """
+
+Scenario: Acesso não autorizado ao relatório
+    Given o usuário comum "Alan" está autenticado no sistema
+    When o usuário tenta acessar a rota "/relatorios/mais-acessados"
+    Then o status da resposta deve ser "403"
+    And o JSON da resposta deve conter:
+        """
+        { "error": "Acesso negado. Permissões insuficientes." }
+        """
