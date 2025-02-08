@@ -1,3 +1,6 @@
+
+let nextDishId = 9; // Contador de IDs
+
 let dishes = [
     {
         id: 1,
@@ -65,4 +68,4 @@ let dishes = [
     }
   ];
 
-  module.exports = {dishes}
+  module.exports = {dishes, nextDishId}
