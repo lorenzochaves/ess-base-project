@@ -1,6 +1,6 @@
 const express = require('express');
 const pratos = express.Router();
-const { dishes } = require('../database/pratos.js');
+const { dishes, nextDishId } = require('../database/pratos.js');
 const { categories } = require('../database/categorias.js');
 
 // Função para encontrar uma categoria pelo nome
@@ -103,8 +103,9 @@ pratos.post('/', (req, res) => {
   }
 
   // Cria o novo prato
+  nextDishId++
   const newDish = {
-    id: dishes.length + 1,
+    id: nextDishId,
     name,
     description: description || '',
     categoryId: category.id, // Associa o prato à categoria
