@@ -1,7 +1,9 @@
 const express = require('express');
 const pratos = express.Router();
-const { dishes, nextDishId } = require('../database/pratos.js');
+const { dishes } = require('../database/pratos.js');
 const { categories } = require('../database/categorias.js');
+
+let nextDishId = 9;
 
 // Função para encontrar uma categoria pelo nome
 const findCategoryByName = (name) => categories.find(c => c.name.toLowerCase() === name.toLowerCase());
@@ -110,27 +112,30 @@ pratos.post('/', (req, res) => {
     return res.status(400).send({ error: 'Nome do prato e nome da categoria são obrigatórios' });
   }
 
+  const dishExists = dishes.some(dish => dish.name.toLowerCase() === name.toLowerCase());
+  if (dishExists) {
+    return res.status(409).send({ error: 'Já existe um prato com esse nome' });
+  }
+
   // Verifica se a categoria já existe
   let category = findCategoryByName(categoryName);
 
-  // Se a categoria não existir, cria uma nova
+  // Se a categoria não existir, mandar erro.
   if (!category) {
-    category = {
-      id: categories.length + 1,
-      name: categoryName,
-      description: ''
-    };
-    categories.push(category);
+    return res.status(409).send({error: 'Essa categoria não existe.'})
   }
 
   // Cria o novo prato
-  nextDishId++
+  
   const newDish = {
-    id: nextDishId,
+    id: nextDishId++,
     name,
     description: description || '',
     categoryId: category.id, // Associa o prato à categoria
-    ingredients: ingredients || []
+    ingredients: ingredients || [],
+    rating: 0.0,
+    views: 0
+
   };
 
   dishes.push(newDish);

@@ -1,9 +1,9 @@
 
-let nextDishId = 9; // Contador de IDs
+let nextDishId = 1; // Contador de IDs
 
 let dishes = [
     {
-        id: 1,
+        id: nextDishId++,
         name: "Frango à Parmegiana",
         description: "Filé de frango empanado coberto com molho de tomate e queijo derretido.",
         category: "Aves",
@@ -12,7 +12,7 @@ let dishes = [
         views: 1000
     },
     {
-        id: 2,
+        id: nextDishId++,
         name: "Lasanha de Carne",
         description: "Camadas de massa intercaladas com molho de carne e queijo.",
         category: "Massas",
@@ -21,7 +21,7 @@ let dishes = [
         views: 376
     },
     {
-        id: 3,
+        id: nextDishId++,
         name: "Salada Caesar",
         description: "Salada clássica com alface, croutons, queijo parmesão e molho Caesar.",
         category: "Saladas",
@@ -30,7 +30,7 @@ let dishes = [
         views: 500
     },
     {
-        id: 4,
+        id: nextDishId++,
         name: "Sushi Variado",
         description: "Seleção de sushi com peixes frescos e arroz temperado.",
         category: "Japonês",
@@ -39,7 +39,7 @@ let dishes = [
         views: 253
     },
     {
-        id: 5,
+        id: nextDishId++,
         name: "Feijoada",
         description: "Prato tradicional brasileiro com feijão preto e diversas carnes.",
         category: "Brasileira",
@@ -48,7 +48,7 @@ let dishes = [
         views: 250
     },
     {
-        id: 6,
+        id: nextDishId++,
         name: "Risoto de Cogumelos",
         description: "Risoto cremoso preparado com cogumelos frescos.",
         category: "Italiana",
@@ -57,7 +57,7 @@ let dishes = [
         views: 145
     },
     {
-        id: 7,
+        id: nextDishId++,
         name: "Tacos de Carne",
         description: "Tortilhas de milho recheadas com carne temperada e acompanhamentos.",
         category: "Mexicana",
@@ -66,7 +66,7 @@ let dishes = [
         views: 12
     },
     {
-        id: 8,
+        id: nextDishId++,
         name: "Bolo de Chocolate",
         description: "Bolo macio e úmido com cobertura de chocolate.",
         category: "Sobremesas",

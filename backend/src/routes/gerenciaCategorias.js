@@ -3,6 +3,9 @@ const router = express.Router();
 const { categories } = require('../database/categorias.js');
 const { dishes } = require('../database/pratos.js'); // Importamos pratos para validação de dependências
 
+let nextCategoryId = 3;
+
+
 // Validação de categoria existente
 const findCategoryById = (id) => categories.find(c => c.id === parseInt(id));
 
@@ -31,7 +34,7 @@ router.post('/', (req, res) => {
   }
 
   const newCategory = {
-    id: categories.length + 1,
+    id: nextCategoryId++,
     name,
     description: description || ''
   };
