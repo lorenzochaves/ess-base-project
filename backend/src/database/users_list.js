@@ -60,3 +60,5 @@ let usuarios = [
         senha: "jf987321"
     }
 ];
+
+module.exports = {users}

@@ -64,3 +64,5 @@ let dishes = [
         Nota: 4.6
     }
   ];
+
+  module.exports = {dishes}
