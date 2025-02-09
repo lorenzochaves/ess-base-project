@@ -43,6 +43,37 @@ router.post('/', (req, res) => {
   res.status(201).send(newCategory);
 });
 
+// Rota para editar uma categoria
+router.put('/:id', (req, res) => {
+    const categoryId = parseInt(req.params.id);
+    const { name, description } = req.body;
+  
+    // Validações
+    if (!name) {
+      return res.status(400).send({ error: 'Nome da categoria é obrigatório' });
+    }
+  
+    // Encontra a categoria pelo ID
+    const category = findCategoryById(categoryId);
+    if (!category) {
+      return res.status(404).send({ error: 'Categoria não encontrada' });
+    }
+  
+    // Verifica se o novo nome já existe (ignorando a própria categoria)
+    const nameExists = categories.some(
+      c => c.id !== categoryId && c.name.toLowerCase() === name.toLowerCase()
+    );
+    if (nameExists) {
+      return res.status(409).send({ error: 'Já existe uma categoria com esse nome' });
+    }
+  
+    // Atualiza a categoria
+    category.name = name;
+    category.description = description || ''; // Mantém a descrição atual se não for fornecida
+  
+    res.status(200).send(category);
+  });
+
 // Rota para deletar categoria
 router.delete('/:id', (req, res) => {
   const categoryId = parseInt(req.params.id);

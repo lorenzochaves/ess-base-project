@@ -8,6 +8,9 @@ let nextDishId = 9;
 // Função para encontrar uma categoria pelo nome
 const findCategoryByName = (name) => categories.find(c => c.name.toLowerCase() === name.toLowerCase());
 
+// Função para encontrar um prato pelo ID
+const findDishById = (id) => dishes.find(d => d.id === parseInt(id));
+
 
 // Rota para listar pratos
 pratos.get('/', (req, res) => {
@@ -103,6 +106,46 @@ pratos.get('/:id', (req, res) => {
   }
 });
 
+// Rota para editar um prato
+pratos.put('/:id', (req, res) => {
+  const dishId = parseInt(req.params.id);
+  const { name, description, categoryName, ingredients } = req.body;
+
+  // Validações
+  if (!name) {
+    return res.status(400).send({ error: 'Nome do prato é obrigatório' });
+  }
+
+  // Encontra o prato pelo ID
+  const dish = findDishById(dishId);
+  if (!dish) {
+    return res.status(404).send({ error: 'Prato não encontrado' });
+  }
+
+  // Verifica se o novo nome já existe (ignorando o próprio prato)
+  const nameExists = dishes.some(
+    d => d.id !== dishId && d.name.toLowerCase() === name.toLowerCase()
+  );
+  if (nameExists) {
+    return res.status(409).send({ error: 'Já existe um prato com esse nome' });
+  }
+
+  // Verifica se a nova categoria existe
+  let category = findCategoryByName(categoryName);
+  if (!category) {
+    return res.status(404).send({ error: 'Categoria não encontrada' });
+  }
+
+  // Atualiza o prato
+  dish.name = name;
+  dish.description = description || dish.description; // Mantém a descrição atual se não for fornecida
+  dish.ingredients = ingredients || dish.ingredients; // Mantém os ingredientes atuais se não forem fornecidos
+  dish.category = categoryName; // Atualiza o ID da categoria
+
+  res.status(200).send(dish);
+});
+
+
 // Rota para adicionar um prato
 pratos.post('/', (req, res) => {
   const { name, description, categoryName, ingredients } = req.body;
@@ -131,7 +174,7 @@ pratos.post('/', (req, res) => {
     id: nextDishId++,
     name,
     description: description || '',
-    categoryId: category.id, // Associa o prato à categoria
+    category: categoryName, // Associa o prato à categoria
     ingredients: ingredients || [],
     rating: 0.0,
     views: 0
