@@ -11,7 +11,7 @@ const buscasRouter= require('./routes/buscas.js');
 const mostViewedRouter= require('./routes/mostViewed.js');
 //const usersRouter = require('./src/routes/gerenciaUsuarios.js');
 //const reviewsRouter = require('./src/routes/reviews');
-const relatoriosRoutes = require("./routes/relatorios"); // Importando a rota de relatórios
+//const relatoriosRoutes = require("./routes/relatorioUso"); // Importando a rota de relatórios
 
 // Montagem das rotas
 app.use('/dishes', pratosRouter);
@@ -20,7 +20,7 @@ app.use('/search', buscasRouter);
 app.use('/most-viewed', mostViewedRouter);
 //app.use('/users', usersRouter);
 //app.use('/reviews', reviewsRouter);
-app.use("/relatorios", relatoriosRoutes); // Adicionando a rota ao servidor
+//app.use("/relatorios", relatoriosRoutes); // Adicionando a rota ao servidor
 
 // Inicialização do servidor
 app.listen(PORT, () => {
