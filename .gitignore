@@ -5,3 +5,5 @@ __pycache__/
 *.swp
 
 node_modules/
+
+package-lock.json
