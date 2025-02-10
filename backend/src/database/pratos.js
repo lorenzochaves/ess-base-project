@@ -1,9 +1,8 @@
 
-let nextDishId = 1; // Contador de IDs
 
 let dishes = [
     {
-        id: nextDishId++,
+        id: 1,
         name: "Frango à Parmegiana",
         description: "Filé de frango empanado coberto com molho de tomate e queijo derretido.",
         category: "Aves",
@@ -12,7 +11,7 @@ let dishes = [
         views: 1000
     },
     {
-        id: nextDishId++,
+        id: 2,
         name: "Lasanha de Carne",
         description: "Camadas de massa intercaladas com molho de carne e queijo.",
         category: "Massas",
@@ -21,7 +20,7 @@ let dishes = [
         views: 376
     },
     {
-        id: nextDishId++,
+        id: 3,
         name: "Salada Caesar",
         description: "Salada clássica com alface, croutons, queijo parmesão e molho Caesar.",
         category: "Saladas",
@@ -30,7 +29,7 @@ let dishes = [
         views: 500
     },
     {
-        id: nextDishId++,
+        id: 4,
         name: "Sushi Variado",
         description: "Seleção de sushi com peixes frescos e arroz temperado.",
         category: "Japonês",
@@ -39,7 +38,7 @@ let dishes = [
         views: 253
     },
     {
-        id: nextDishId++,
+        id: 5,
         name: "Feijoada",
         description: "Prato tradicional brasileiro com feijão preto e diversas carnes.",
         category: "Brasileira",
@@ -48,7 +47,7 @@ let dishes = [
         views: 250
     },
     {
-        id: nextDishId++,
+        id: 6,
         name: "Risoto de Cogumelos",
         description: "Risoto cremoso preparado com cogumelos frescos.",
         category: "Italiana",
@@ -57,7 +56,7 @@ let dishes = [
         views: 145
     },
     {
-        id: nextDishId++,
+        id: 7,
         name: "Tacos de Carne",
         description: "Tortilhas de milho recheadas com carne temperada e acompanhamentos.",
         category: "Mexicana",
@@ -66,7 +65,7 @@ let dishes = [
         views: 12
     },
     {
-        id: nextDishId++,
+        id: 8,
         name: "Bolo de Chocolate",
         description: "Bolo macio e úmido com cobertura de chocolate.",
         category: "Sobremesas",
@@ -76,4 +75,5 @@ let dishes = [
     }
   ];
 
-  module.exports = {dishes, nextDishId}
+
+module.exports = { dishes };
