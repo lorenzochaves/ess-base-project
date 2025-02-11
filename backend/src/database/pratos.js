@@ -14,7 +14,7 @@ let dishes = [
         id: 2,
         name: "Lasanha de Carne",
         description: "Camadas de massa intercaladas com molho de carne e queijo.",
-        category: "Massas",
+        category: "Italiana",
         ingredients: "massa para lasanha, carne moída, molho de tomate, queijo muçarela, queijo parmesão",
         rating: 4.5,
         views: 376
@@ -59,7 +59,7 @@ let dishes = [
         id: 7,
         name: "Tacos de Carne",
         description: "Tortilhas de milho recheadas com carne temperada e acompanhamentos.",
-        category: "Mexicana",
+        category: "Carnes Premium",
         ingredients: "tortilhas de milho, carne moída, alface, tomate, queijo cheddar",
         rating: 4.1,
         views: 12

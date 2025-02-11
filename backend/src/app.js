@@ -22,7 +22,12 @@ app.use('/most-viewed', mostViewedRouter);
 //app.use('/reviews', reviewsRouter);
 //app.use("/relatorios", relatoriosRoutes); // Adicionando a rota ao servidor
 
+module.exports = app
 // Inicialização do servidor
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+  });
+}
+
+
