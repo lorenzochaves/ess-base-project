@@ -131,7 +131,6 @@ router.delete('/:id', (req, res) => {
   
   // Verifica se a categoria está sendo usada em algum prato
   const isCategoryInUse = dishes.some(d => d.category === category.name);
-  console.log( isCategoryInUse )
   if (isCategoryInUse) {
     return res.status(409).send({ 
       error: 'Não é possível excluir: categoria está vinculada a pratos' 

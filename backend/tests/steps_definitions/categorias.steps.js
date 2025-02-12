@@ -1,3 +1,5 @@
+// npx cucumber-js --require tests/steps_definitions tests/features/categorias.feature
+
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { expect } = require('chai');
 const request = require('supertest');
