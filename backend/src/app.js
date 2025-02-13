@@ -9,6 +9,7 @@ const pratosRouter = require('./routes/gerenciaPratos');
 const categoriesRouter = require('./routes/gerenciaCategorias.js');
 const buscasRouter= require('./routes/buscas.js');
 const mostViewedRouter= require('./routes/mostViewed.js');
+const newsRouter= require('./routes/gerenciaNoticias.js');
 //const usersRouter = require('./src/routes/gerenciaUsuarios.js');
 //const reviewsRouter = require('./src/routes/reviews');
 //const relatoriosRoutes = require("./routes/relatorioUso"); // Importando a rota de relatórios
@@ -18,6 +19,7 @@ app.use('/dishes', pratosRouter);
 app.use('/categories', categoriesRouter);
 app.use('/search', buscasRouter);
 app.use('/most-viewed', mostViewedRouter);
+app.use('/news', newsRouter);
 //app.use('/users', usersRouter);
 //app.use('/reviews', reviewsRouter);
 //app.use("/relatorios", relatoriosRoutes); // Adicionando a rota ao servidor
