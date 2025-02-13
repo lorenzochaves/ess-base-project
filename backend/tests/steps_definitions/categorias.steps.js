@@ -1,15 +1,16 @@
 // npx cucumber-js --require tests/steps_definitions tests/features/categorias.feature
 
 const { Given, When, Then } = require('@cucumber/cucumber');
-const { expect } = require('chai');
 const request = require('supertest');
-const express = require('express');
-const categoriesRouter = require('../../src/routes/gerenciaCategorias');
+const app = require('../setup/app');
 
-// Criar uma nova instância do app para testes
-const app = express();
-app.use(express.json());
-app.use('/categories', categoriesRouter);
+let chai, expect;
+
+(async () => {
+  chai = await import('chai');  // Importa dinamicamente
+  expect = chai.expect;
+})();
+
 let response;
 
 Given('que existem categorias cadastradas no sistema', function () {
