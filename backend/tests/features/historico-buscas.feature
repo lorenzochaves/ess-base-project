@@ -1,113 +1,153 @@
-Feature: Histórico de Buscas
-    As um usuário
-    I want to visualizar, adicionar, remover e limpar meu histórico de buscas
-    So that  eu possa gerenciar facilmente meus termos de pesquisa anteriores.
+# language: pt
 
-Scenario: Exibir últimas 5 buscas na barra de busca - GUI
-  Given o usuário "Bruno" está na página "Feed"
-  And o histórico de buscas do usuário contém "pizza", "hambúrguer", "sushi", "vegetariano" e "lasanha"  
-  When o usuário acessa a barra de busca  
-  Then as sugestões no dropdown exibem:  
-    | Sugestão      |
-    | lasanha       |
-    | vegetariano   |
-    | sushi         |
-    | hambúrguer    |
-    | pizza         |
+Funcionalidade: Histórico e Busca de Pratos
 
-Scenario: Atualizar histórico de buscas após nova busca - GUI
+  Como um usuário do sistema
+  Eu quero poder buscar pratos e gerenciar meu histórico de buscas
+  Para que eu possa encontrar pratos específicos e manter registro de minhas pesquisas
 
-  Given o usuário "Bruno" está na página "Feed"
-  And o histórico de buscas do usuário é: "salada", "hambúrguer", "bolo"
-  When o usuário pesquisa pelo termo "chocolate" na barra de busca
-  Then o sistema adiciona "chocolate" ao histórico de buscas
-  And o histórico de buscas atualizado é: "chocolate", "salada", "hambúrguer", "bolo"
-
-Scenario: Atualizar histórico de buscas após nova busca - Serviço
-
-  Given o usuário "Bruno" tem o seguinte histórico de buscas:
-    | termo       |
-    | salada      |
-    | hambúrguer  |
-    | bolo        |
-  When o usuário faz uma requisição "POST" para "/historico/adicionar" com os seguintes dados:
-    | usuario_id  | 12345       |
-    | termo       | chocolate   |
-  Then o status da resposta deve ser "200"
-  And o JSON da resposta deve conter um campo "msg" com o valor "Busca adicionada com sucesso"
-  And o histórico de buscas do usuário deve ser:
-    | termo       |
-    | chocolate   |
-    | salada      |
-    | hambúrguer  |
-    | bolo        |
-
-Scenario: Exibir todo o histórico de buscas em uma página separada  - GUI
-  Given o usuário "Bruno" está na página "Feed" 
-  And o histórico de buscas do usuário contém "carne", "hambúrguer", "frango", "vegetariano", "lasanha", "chocolate"  
-  When o usuário seleciona o botão "Ver todo o histórico" na barra de busca  
-  Then o sistema redireciona para a página "Histórico de buscas"  
-  And a página exibe o histórico completo:  
-    | Termo         |
-    | carne         |
-    | hambúrguer    |
-    | frango        |
-    | vegetariano   |
-    | lasanha       |
-    | chocolate     |
+  Contexto:
+    Dado que o histórico de buscas está vazio
+    E que o sistema possui os seguintes pratos cadastrados:
+      | nome                  | categoria  | nota | visualizacoes | descricao                                                        |
+      | Frango à Parmegiana  | Aves       | 4.2  | 1000         | Filé de frango empanado coberto com molho de tomate e queijo    |
+      | Lasanha de Carne     | Italiana   | 4.5  | 376          | Camadas de massa intercaladas com molho de carne e queijo        |
+      | Salada Caesar        | Saladas    | 4.0  | 500          | Salada clássica com alface, croutons e molho Caesar             |
+      | Sushi Variado        | Japonês    | 4.8  | 253          | Seleção de sushi com peixes frescos e arroz temperado           |
+      | Feijoada            | Brasileira | 4.7  | 250          | Prato tradicional brasileiro com feijão preto e carnes          |
+      | Risoto de Cogumelos | Italiana   | 4.3  | 145          | Risoto cremoso preparado com cogumelos frescos                  |
+      | Tacos de Carne      | Carnes Premium    | 4.1  | 12           | Tortilhas de milho recheadas com carne temperada                |
+      | Bolo de Chocolate   | Sobremesas | 4.6  | 925          | Bolo macio e úmido com cobertura de chocolate                   |
 
 
-Scenario: Limpar todo o histórico de buscas - Serviço
+  # Cenários de Busca Básica
+  Cenário: Buscar prato pelo nome exato
+    Quando o usuário faz uma requisição GET para "/search?name=Feijoada"
+    Então a resposta deve ser "200"
+    E a resposta deve conter 1 prato
+    E o prato deve ter nome "Feijoada"
+    E o histórico de buscas deve conter as seguintes buscas:
+      | termo    | filtros |
+      | Feijoada | {}      |
 
-  Given o usuário "Bruno" tem o seguinte histórico de buscas:
-    | termo       |
-    | salada      |
-    | hambúrguer  |
-    | bolo        |
-  When o usuário faz uma requisição "DELETE" para "/historico/limpar" com os seguintes dados:
-    | usuario_id  | 12345       |
-  Then o status da resposta deve ser "200"
-  And o JSON da resposta deve conter um campo "msg" com o valor "Histórico de buscas limpo com sucesso"
-  And o histórico de buscas do usuário deve ser:
-    | termo       |
-    |             |
+  Cenário: Buscar prato por parte do nome
+    Quando o usuário faz uma requisição GET para "/search?name=Frango"
+    Então a resposta deve ser "200"
+    E a resposta deve conter 1 prato
+    E o prato deve ter nome "Frango à Parmegiana"
+    E o histórico de buscas deve conter as seguintes buscas:
+      | termo  | filtros |
+      | Frango | {}      |
 
+  # Cenários de Busca com Filtros
+  Cenário: Buscar pratos por categoria
+    Quando o usuário faz uma requisição GET para "/search?category=Italiana"
+    Então a resposta deve ser "200"
+    E a resposta deve conter 2 pratos
+    E os pratos devem ser da categoria "Italiana"
+    E o histórico de buscas deve conter as seguintes buscas:
+      | termo | filtros                    |
+      |       | { "category": "Italiana" } |
 
-Scenario: Remover busca específica do histórico - Serviço
+  Cenário: Buscar pratos com nota mínima
+    Quando o usuário faz uma requisição GET para "/search?minNota=4.5"
+    Então a resposta deve ser "200"
+    E a resposta deve conter 4 pratos
+    E todos os pratos devem ter nota maior ou igual a 4.5
+    E o histórico de buscas deve conter as seguintes buscas:
+      | termo | filtros              |
+      |       | { "minNota": "4.5" } |
 
+  Cenário: Buscar pratos com intervalo de notas
+    Quando o usuário faz uma requisição GET para "/search?minNota=4.0&maxNota=4.5"
+    Então a resposta deve ser "200"
+    E a resposta deve conter 5 pratos
+    E todos os pratos devem ter nota entre 4.0 e 4.5
+    E o histórico de buscas deve conter as seguintes buscas:
+      | termo | filtros                                    |
+      |       | { "minNota": "4.0", "maxNota": "4.5" }    |
 
-  Given o usuário "Bruno" tem o seguinte histórico de buscas:
-    | termo       |
-    | salada      |
-    | hambúrguer  |
-    | bolo        |
-  When o usuário faz uma requisição "DELETE" para "/historico/remover" com os seguintes dados:
-    | usuario_id  | 12345       |
-    | termo       | hambúrguer  |
-  Then o status da resposta deve ser "200"
-  And o JSON da resposta deve conter um campo "msg" com o valor "Busca removida com sucesso"
-  And o histórico de buscas do usuário deve ser:
-    | termo       |
-    | salada      |
-    | bolo        |
+  Cenário: Buscar pratos por visualizações mínimas
+    Quando o usuário faz uma requisição GET para "/search?minViews=500"
+    Então a resposta deve ser "200"
+    E a resposta deve conter 3 pratos
+    E todos os pratos devem ter mais de 500 visualizações
+    E o histórico de buscas deve conter as seguintes buscas:
+      | termo | filtros                |
+      |       | { "minViews": "500" }  |
 
-Scenario: Histórico de buscas ao adicionar um termo repetido - Serviço
-  Given o usuário "Bruno" tem o seguinte histórico de buscas:
-    | termo       |
-    | pizza       |
-    | hambúrguer  |
-  When o usuário faz uma requisição "POST" para "/historico/adicionar" com os seguintes dados:
-    | usuario_id  | 12345       |
-    | termo       | pizza       |
-  Then o status da resposta deve ser "200"
-  And o histórico de buscas do usuário não deve ser alterado:
-    | termo       |
-    | pizza       |
-    | hambúrguer  |
+  # Cenários de Busca Complexa
+  Cenário: Buscar pratos com múltiplos filtros
+    Quando o usuário faz uma requisição GET para "/search?category=Italiana&minNota=4.3&maxViews=400"
+    Então a resposta deve ser "200"
+    E a resposta deve conter 2 pratos
+    E os pratos devem atender a todos os critérios
+    E o histórico de buscas deve conter as seguintes buscas:
+      | termo | filtros                                                           |
+      |       | { "category": "Italiana", "minNota": "4.3", "maxViews": "400" }  |
 
+  Cenário: Buscar pratos com nome e filtros
+    Quando o usuário faz uma requisição GET para "/search?name=La&category=Italiana&minNota=4.0"
+    Então a resposta deve ser "200"
+    E a resposta deve conter 1 pratos
+    E os pratos devem ter "La" no nome
+    E o histórico de buscas deve conter as seguintes buscas:
+      | termo | filtros                                            |
+      | La    | { "category": "Italiana", "minNota": "4.0" }      |
 
+  # Cenários de Erro
+  Cenário: Buscar prato inexistente
+    Quando o usuário faz uma requisição GET para "/search?name=PratoInexistente"
+    Então a resposta deve ser "404"
+    E a mensagem de erro deve ser "Nenhum prato encontrado com esses filtros"
+    E o histórico de buscas deve conter as seguintes buscas:
+      | termo            | filtros |
+      | PratoInexistente | {}      |
 
+  Cenário: Buscar com nota máxima inválida
+    Quando o usuário faz uma requisição GET para "/search?maxNota=6.0"
+    Então a resposta deve ser "400"
+    E a mensagem de erro deve ser "Nota máxima deve ser entre 0 e 5"
 
+  # Cenários de Histórico
+  Cenário: Verificar limite de 100 buscas no histórico
+    Dado que o histórico contém 100 buscas antigas
+    Quando o usuário faz uma requisição GET para "/search?name=Lasanha"
+    Então a resposta deve ser "200"
+    E o histórico deve conter exatamente 100 buscas
+    E a busca mais recente deve ter termo "Lasanha"
 
+  Cenário: Remover busca específica do histórico
+    Dado que o histórico de buscas contém as seguintes buscas:
+      | termo    | filtros                    |
+      | Lasanha  | { "category": "Italiana" } |
+      | Feijoada | {}                         |
+      | Sushi    | { "minNota": "4.5" }       |
+    Quando o usuário faz uma requisição DELETE para "/search/historico/1"
+    Então a resposta deve ser "204"
+    E o histórico de buscas deve conter as seguintes buscas:
+      | termo    | filtros                    |
+      | Lasanha  | { "category": "Italiana" } |
+      | Sushi    | { "minNota": "4.5" }       |
 
- 
+  Cenário: Limpar histórico completo
+    Dado que o histórico de buscas contém as seguintes buscas:
+      | termo   | filtros                    |
+      | Lasanha | { "category": "Italiana" } |
+      | Frango  | { "minNota": "4.5" }       |
+    Quando o usuário faz uma requisição DELETE para "/search/historico"
+    Então a resposta deve ser "204"
+    E o histórico de buscas deve estar vazio
+
+  Cenário: Tentar remover busca com índice inválido
+    Dado que o histórico de buscas contém as seguintes buscas:
+      | termo   | filtros                    |
+      | Lasanha | { "category": "Italiana" } |
+    Quando o usuário faz uma requisição DELETE para "/search/historico/999"
+    Então a resposta deve ser "400"
+    E a mensagem de erro deve ser "Índice inválido"
+
+  Cenário: Visualizar histórico vazio
+    Quando o usuário faz uma requisição GET para "/search/historico"
+    Então a resposta deve ser "200"
+    E o corpo da resposta deve ser um array vazio

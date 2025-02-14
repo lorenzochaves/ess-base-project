@@ -1,15 +1,12 @@
 // npx cucumber-js --require tests/steps_definitions tests/features/categorias.feature
-
 const { Given, When, Then } = require('@cucumber/cucumber');
-const { expect } = require('chai');
+const chai = require('chai');
 const request = require('supertest');
-const express = require('express');
-const categoriesRouter = require('../../src/routes/gerenciaCategorias');
+const app = require('../../src/app.js');
 
-// Criar uma nova instância do app para testes
-const app = express();
-app.use(express.json());
-app.use('/categories', categoriesRouter);
+
+const expect = chai.expect;
+
 let response;
 
 Given('que existem categorias cadastradas no sistema', function () {
@@ -33,14 +30,14 @@ Given('que a categoria está vinculada a pratos', function () {
 });
 
 When('eu faço uma requisição GET para {string}', async function (path) {
-  response = await request('http://localhost:4001')
+  response = await request(app)
     .get(path)
     .set('Accept', 'application/json');
 });
 
 When('eu faço uma requisição POST para {string} com os dados:', async function (path, dadosTabela) {
   const dados = dadosTabela.rowsHash();
-  response = await request('http://localhost:4001')
+  response = await request(app)
     .post(path)
     .send(dados)
     .set('Accept', 'application/json');
@@ -48,14 +45,14 @@ When('eu faço uma requisição POST para {string} com os dados:', async functio
 
 When('eu faço uma requisição PUT para {string} com os dados:', async function (path, dadosTabela) {
   const dados = dadosTabela.rowsHash();
-  response = await request('http://localhost:4001')
+  response = await request(app)
     .put(path)
     .send(dados)
     .set('Accept', 'application/json');
 });
 
 When('eu faço uma requisição DELETE para {string}', async function (path) {
-  response = await request('http://localhost:4001')
+  response = await request(app)
     .delete(path)
     .set('Accept', 'application/json');
 });
@@ -91,7 +88,7 @@ Then('a resposta deve conter a mensagem de erro {string}', function (mensagem) {
 
 Then('a categoria deve ter sido excluída com sucesso', async function () {
   // Verifica se a categoria realmente foi excluída tentando buscá-la
-  const checkResponse = await request('http://localhost:4001')
+  const checkResponse = await request(app)
     .get(`/categories/${response.body.id}`)
     .set('Accept', 'application/json');
   expect(checkResponse.status).to.equal(404);

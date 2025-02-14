@@ -127,7 +127,6 @@ router.delete('/:id', (req, res) => {
   }
 
   const category = categories[categoryIndex];
-  console.log( category )
   
   // Verifica se a categoria está sendo usada em algum prato
   const isCategoryInUse = dishes.some(d => d.category === category.name);
