@@ -1,0 +1,20 @@
+{
+  "name": "ess-base-project",
+  "version": "1.0.0",
+  "description": "Este projeto serve como ponto de partida para o desenvolvimento de aplicações utilizando os *frameworks* de *backend* e *frontend* escolhidos pela equipe.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lorenzochaves/ess-base-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lorenzochaves/ess-base-project/issues"
+  },
+  "homepage": "https://github.com/lorenzochaves/ess-base-project#readme"
+}
