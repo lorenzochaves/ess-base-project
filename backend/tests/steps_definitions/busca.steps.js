@@ -2,14 +2,10 @@
 
 const { Given, When, Then } = require('@cucumber/cucumber');
 const request = require('supertest');
-const app = require('../setup/app');
+const chai = require('chai');
+const app = require('../../src/app.js');
 
-let chai, expect;
-
-(async () => {
-  chai = await import('chai');  // Importa dinamicamente
-  expect = chai.expect;
-})();
+const expect = chai.expect;
 
 let response;
 
@@ -44,7 +40,7 @@ Given('que existem filtros aplicados na search', { tags: '@busca' }, function ()
 
 // Passos de When
 When('eu faço uma requisição GET para {string} na busca', { tags: '@busca' }, async function (endpoint) {
-  response = await request('http://localhost:4001')
+  response = await request(app)
     .get(endpoint)
     .set('Accept', 'application/json');
   //console.log(`Requisição para ${endpoint}:`, response.status, response.body);
@@ -52,7 +48,7 @@ When('eu faço uma requisição GET para {string} na busca', { tags: '@busca' },
 
 When('eu faço uma requisição GET para {string} com os parâmetros:', { tags: '@busca' }, async function (endpoint, dataTable) {
   const params = dataTable.rowsHash();
-  response = await request('http://localhost:4001')
+  response = await request(app)
     .get(endpoint)
     .query(params)
     .set('Accept', 'application/json');
@@ -60,7 +56,7 @@ When('eu faço uma requisição GET para {string} com os parâmetros:', { tags: 
 });
 
 When('eu faço uma requisição GET para {string} sem parâmetros', { tags: '@busca' }, async function (endpoint) {
-  response = await request('http://localhost:4001')
+  response = await request(app)
     .get(endpoint)
     .set('Accept', 'application/json');
   //console.log(`Requisição para ${endpoint}:`, response.status, response.body);
