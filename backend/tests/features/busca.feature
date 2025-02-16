@@ -50,3 +50,6 @@ Given que existem filtros aplicados na search
 When eu faço uma requisição GET para "/search" sem parâmetros 
 Then devo receber todos os pratos cadastrados no sistema
 And o código de status das respostas deve ser 200
+
+
+
