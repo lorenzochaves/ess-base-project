@@ -21,6 +21,7 @@ Funcionalidade: Histórico e Busca de Pratos
 
 
   # Cenários de Busca Básica
+  @historico
   Cenário: Buscar prato pelo nome exato
     Quando o usuário faz uma requisição GET para "/search?name=Feijoada"
     Então a resposta deve ser "200"
@@ -30,6 +31,7 @@ Funcionalidade: Histórico e Busca de Pratos
       | termo    | filtros |
       | Feijoada | {}      |
 
+  @historico
   Cenário: Buscar prato por parte do nome
     Quando o usuário faz uma requisição GET para "/search?name=Frango"
     Então a resposta deve ser "200"
@@ -40,6 +42,7 @@ Funcionalidade: Histórico e Busca de Pratos
       | Frango | {}      |
 
   # Cenários de Busca com Filtros
+  @historico
   Cenário: Buscar pratos por categoria
     Quando o usuário faz uma requisição GET para "/search?category=Italiana"
     Então a resposta deve ser "200"
@@ -49,6 +52,7 @@ Funcionalidade: Histórico e Busca de Pratos
       | termo | filtros                    |
       |       | { "category": "Italiana" } |
 
+  @historico
   Cenário: Buscar pratos com nota mínima
     Quando o usuário faz uma requisição GET para "/search?minNota=4.5"
     Então a resposta deve ser "200"
@@ -58,6 +62,7 @@ Funcionalidade: Histórico e Busca de Pratos
       | termo | filtros              |
       |       | { "minNota": "4.5" } |
 
+  @historico
   Cenário: Buscar pratos com intervalo de notas
     Quando o usuário faz uma requisição GET para "/search?minNota=4.0&maxNota=4.5"
     Então a resposta deve ser "200"
@@ -67,6 +72,8 @@ Funcionalidade: Histórico e Busca de Pratos
       | termo | filtros                                    |
       |       | { "minNota": "4.0", "maxNota": "4.5" }    |
 
+  
+  @historico
   Cenário: Buscar pratos por visualizações mínimas
     Quando o usuário faz uma requisição GET para "/search?minViews=500"
     Então a resposta deve ser "200"
@@ -77,6 +84,7 @@ Funcionalidade: Histórico e Busca de Pratos
       |       | { "minViews": "500" }  |
 
   # Cenários de Busca Complexa
+  @historico
   Cenário: Buscar pratos com múltiplos filtros
     Quando o usuário faz uma requisição GET para "/search?category=Italiana&minNota=4.3&maxViews=400"
     Então a resposta deve ser "200"
@@ -86,6 +94,7 @@ Funcionalidade: Histórico e Busca de Pratos
       | termo | filtros                                                           |
       |       | { "category": "Italiana", "minNota": "4.3", "maxViews": "400" }  |
 
+  @historico
   Cenário: Buscar pratos com nome e filtros
     Quando o usuário faz uma requisição GET para "/search?name=La&category=Italiana&minNota=4.0"
     Então a resposta deve ser "200"
@@ -96,6 +105,7 @@ Funcionalidade: Histórico e Busca de Pratos
       | La    | { "category": "Italiana", "minNota": "4.0" }      |
 
   # Cenários de Erro
+  @historico
   Cenário: Buscar prato inexistente
     Quando o usuário faz uma requisição GET para "/search?name=PratoInexistente"
     Então a resposta deve ser "404"
@@ -104,12 +114,14 @@ Funcionalidade: Histórico e Busca de Pratos
       | termo            | filtros |
       | PratoInexistente | {}      |
 
+  @historico
   Cenário: Buscar com nota máxima inválida
     Quando o usuário faz uma requisição GET para "/search?maxNota=6.0"
     Então a resposta deve ser "400"
     E a mensagem de erro deve ser "Nota máxima deve ser entre 0 e 5"
 
   # Cenários de Histórico
+  @historico
   Cenário: Verificar limite de 100 buscas no histórico
     Dado que o histórico contém 100 buscas antigas
     Quando o usuário faz uma requisição GET para "/search?name=Lasanha"
@@ -117,6 +129,7 @@ Funcionalidade: Histórico e Busca de Pratos
     E o histórico deve conter exatamente 100 buscas
     E a busca mais recente deve ter termo "Lasanha"
 
+  @historico
   Cenário: Remover busca específica do histórico
     Dado que o histórico de buscas contém as seguintes buscas:
       | termo    | filtros                    |
@@ -130,6 +143,7 @@ Funcionalidade: Histórico e Busca de Pratos
       | Lasanha  | { "category": "Italiana" } |
       | Sushi    | { "minNota": "4.5" }       |
 
+  @historico
   Cenário: Limpar histórico completo
     Dado que o histórico de buscas contém as seguintes buscas:
       | termo   | filtros                    |
@@ -139,6 +153,7 @@ Funcionalidade: Histórico e Busca de Pratos
     Então a resposta deve ser "204"
     E o histórico de buscas deve estar vazio
 
+  @historico
   Cenário: Tentar remover busca com índice inválido
     Dado que o histórico de buscas contém as seguintes buscas:
       | termo   | filtros                    |
@@ -147,6 +162,7 @@ Funcionalidade: Histórico e Busca de Pratos
     Então a resposta deve ser "400"
     E a mensagem de erro deve ser "Índice inválido"
 
+  @historico
   Cenário: Visualizar histórico vazio
     Quando o usuário faz uma requisição GET para "/search/historico"
     Então a resposta deve ser "200"
