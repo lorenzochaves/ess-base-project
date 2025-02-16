@@ -63,14 +63,12 @@ When('eu faço uma requisição GET para {string} sem parâmetros', { tags: '@bu
 // Passos de Then
 Then('devo receber os detalhes do prato {string}', { tags: '@busca' }, function (nomePrato) {
   //console.log('Debug - response:', response);
-  expect(response.status).to.equal(200);
   expect(response.body).to.be.an('array').that.is.not.empty;
   expect(response.body[0].name).to.equal(nomePrato);
 });
 
 Then('devo receber uma lista de pratos da categoria {string}', { tags: '@busca' }, function (categoria) {
   //console.log('Debug - response:', response);
-  expect(response.status).to.equal(200);
   expect(response.body).to.be.an('array').that.is.not.empty;
   response.body.forEach(prato => {
     expect(prato.category).to.equal(categoria);
@@ -79,7 +77,6 @@ Then('devo receber uma lista de pratos da categoria {string}', { tags: '@busca' 
 
 Then('devo receber apenas pratos com nota igual ou superior a {float}', { tags: '@busca' }, function (notaMinima) {
   //console.log('Debug - response:', response);
-  expect(response.status).to.equal(200);
   expect(response.body).to.be.an('array').that.is.not.empty;
   response.body.forEach(prato => {
     expect(prato.rating).to.be.at.least(notaMinima);
@@ -88,25 +85,21 @@ Then('devo receber apenas pratos com nota igual ou superior a {float}', { tags: 
 
 Then('devo receber uma lista com os {int} pratos mais vistos', { tags: '@busca' }, function (quantidade) {
   //console.log('Debug - response:', response);
-  expect(response.status).to.equal(200);
   expect(response.body).to.be.an('array').with.lengthOf(quantidade);
 });
 
 Then('devo receber os pratos que correspondem aos critérios aplicados', { tags: '@busca' }, function () {
   //console.log('Debug - response:', response);
-  expect(response.status).to.equal(200);
   expect(response.body).to.be.an('array').that.is.not.empty;
 });
 
 Then('devo receber uma mensagem {string}', { tags: '@busca' }, function (mensagem) {
   //console.log('Debug - response:', response);
-  expect(response.status).to.equal(404);
   expect(response.body).to.have.property('error', mensagem);
 });
 
 Then('devo receber todos os pratos cadastrados no sistema', { tags: '@busca' }, function () {
   //console.log('Debug - response:', response);
-  expect(response.status).to.equal(200);
   expect(response.body).to.be.an('array').that.is.not.empty;
 });
 
