@@ -14,16 +14,16 @@ const findNewsById = (id) => news.find(n => n.id === parseInt(id));
 const validateNews = (title, subtitle, body) => {
   const errors = [];
 
-  if (!title || title.length > 100) {
-    errors.push('O título é obrigatório e deve ter no máximo 100 caracteres.');
+  if (!title || title.length > 50) {
+    errors.push('O título é obrigatório e deve ter no máximo 50 caracteres.');
   }
 
   if (!subtitle || subtitle.length > 100) {
     errors.push('O subtítulo é obrigatório e deve ter no máximo 100 caracteres.');
   }
 
-  if (!body || body.length > 1000) {
-    errors.push('O corpo da notícia é obrigatório e deve ter no máximo 1000 caracteres.');
+  if (!body || body.length > 250) {
+    errors.push('O corpo da notícia é obrigatório e deve ter no máximo 250 caracteres.');
   }
 
   return errors;
