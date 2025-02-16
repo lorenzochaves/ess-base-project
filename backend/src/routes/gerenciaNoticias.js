@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { news } = require('../database/noticias.js'); // Importa o array de notícias
 
-let nextNewsId = 5; // Próximo ID para novas notícias
+let nextNewsId = 3; // Próximo ID para novas notícias
 
 // Função para validar se o ID é um número válido
 const isValidId = (id) => !isNaN(id) && Number.isInteger(parseFloat(id));
@@ -47,8 +47,9 @@ router.get('/:id', (req, res) => {
 });
 
 // Rota para criar uma nova notícia
+// Rota para criar uma nova notícia
 router.post('/', (req, res) => {
-  const { title, subtitle, body, publicationDate } = req.body;
+  const { title, subtitle, body } = req.body;
 
   // Validações
   const errors = validateNews(title, subtitle, body);
@@ -56,10 +57,12 @@ router.post('/', (req, res) => {
     return res.status(400).send({ errors });
   }
 
-  // Verifica se a data de publicação foi fornecida
-  if (!publicationDate) {
-    return res.status(400).send({ error: 'A data de publicação é obrigatória.' });
-  }
+  // Gera a data atual no formato "ano-mês-dia"
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Mês é base 0, então adicionamos 1
+  const day = String(now.getDate()).padStart(2, '0');
+  const publicationDate = `${year}-${month}-${day}`; // Formato "YYYY-MM-DD"
 
   // Cria a nova notícia
   const newNews = {
@@ -67,7 +70,8 @@ router.post('/', (req, res) => {
     title,
     subtitle,
     body,
-    publicationDate
+    publicationDate, // Data no formato "ano-mês-dia"
+    views: 0
   };
 
   news.push(newNews);
