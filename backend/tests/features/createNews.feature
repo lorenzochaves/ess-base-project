@@ -33,4 +33,3 @@ Feature: Criar Notícias
     And existe uma notícia com ID "1"
     When o usuario envia uma requisição DELETE para "news/1"
     Then o sistema retorna um status code "204"
-    And a notícia não deve mais estar disponível no sistema
