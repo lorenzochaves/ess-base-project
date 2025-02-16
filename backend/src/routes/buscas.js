@@ -98,7 +98,7 @@ router.get('/', validarParametros, (req, res) => {
   if (filteredDishes.length > 0) {
     res.send(filteredDishes);
   } else {
-    res.status(404).send({ error: 'Nenhum prato encontrado com esses filtros' });
+    res.status(404).send({ error: "Nenhum prato encontrado com esses filtros" });
   }
 });
 
