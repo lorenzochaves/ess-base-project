@@ -72,7 +72,7 @@ pratos.put('/:id', (req, res) => {
 
 // Rota para adicionar um prato
 pratos.post('/', (req, res) => {
-  const { name, description, categoryName, ingredients } = req.body;
+  const { name, description, categoryName, ingredients, views } = req.body;
 
   // Validações
   if (!name || !categoryName) {
@@ -89,20 +89,21 @@ pratos.post('/', (req, res) => {
 
   // Se a categoria não existir, mandar erro.
   if (!category) {
-    return res.status(409).send({error: 'Essa categoria não existe.'})
+    return res.status(409).send({ error: 'Essa categoria não existe.' });
   }
 
+  // Define um número de visualizações artificial (ou 0 se não for passado)
+  const viewsCount = views !== undefined ? views : 0;
+
   // Cria o novo prato
-  
   const newDish = {
     id: nextDishId++,
     name,
     description: description || '',
-    category: categoryName, // Associa o prato à categoria
+    category: categoryName,
     ingredients: ingredients || [],
     rating: 0.0,
-    views: 0
-
+    views: viewsCount 
   };
 
   dishes.push(newDish);

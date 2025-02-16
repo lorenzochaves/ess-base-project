@@ -46,14 +46,6 @@ When('eu faço uma requisição GET para {string} na busca', { tags: '@busca' },
   //console.log(`Requisição para ${endpoint}:`, response.status, response.body);
 });
 
-When('eu faço uma requisição GET para {string} com os parâmetros:', { tags: '@busca' }, async function (endpoint, dataTable) {
-  const params = dataTable.rowsHash();
-  response = await request(app)
-    .get(endpoint)
-    .query(params)
-    .set('Accept', 'application/json');
-  //console.log(`Requisição para ${endpoint}:`, response.status, response.body);
-});
 
 When('eu faço uma requisição GET para {string} sem parâmetros', { tags: '@busca' }, async function (endpoint) {
   response = await request(app)
