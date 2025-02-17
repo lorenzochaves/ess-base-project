@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "start": "env-cmd -f .env nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts",
+    "start": "env-cmd -f .env nodemon --watch 'src/**/*.ts' --exec ts-node src/app.js",
     "build": "tsc -p .",
     "prod": "node dist/src/index.js",
     "test": "env-cmd -f .env.test jest --verbose --coverage  --config ./jest.config.js --detectOpenHandles",
@@ -36,6 +36,7 @@
     "@types/supertest": "^2.0.12",
     "@types/uuid": "^9.0.0",
     "@typescript-eslint/parser": "^5.51.0",
+    "concurrently": "^9.1.2",
     "eslint-plugin-no-unused-expressions": "^0.1.0",
     "husky": "^8.0.3",
     "jest": "^29.5.0",

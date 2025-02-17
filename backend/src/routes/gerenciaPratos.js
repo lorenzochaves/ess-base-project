@@ -1,8 +1,12 @@
+
+
 const express = require('express');
 const pratos = express.Router();
-const { dishes } = require('../database/pratos.js');
+let { dishes } = require('../database/pratos.js');
 const { categories } = require('../database/categorias.js');
+const { randomInt } = require('crypto');
 
+let initialdishes = dishes;
 let nextDishId = 9;
 
 // Função para encontrar uma categoria pelo nome
@@ -26,14 +30,14 @@ pratos.get('/:id', (req, res) => {
     dish.views = (dish.views || 0) + 1;
     res.send(dish);
   } else {
-    res.status(404).send({ error: 'Prato não encontrado' });
+    res.status(400).send({ error: 'Prato não encontrado' });
   }
 });
 
 // Rota para editar um prato
 pratos.put('/:id', (req, res) => {
   const dishId = parseInt(req.params.id);
-  const { name, description, categoryName, ingredients } = req.body;
+  const { name, description, category, ingredients, rating, views } = req.body;
 
   // Validações
   if (!name) {
@@ -51,12 +55,12 @@ pratos.put('/:id', (req, res) => {
     d => d.id !== dishId && d.name.toLowerCase() === name.toLowerCase()
   );
   if (nameExists) {
-    return res.status(409).send({ error: 'Já existe um prato com esse nome' });
+    return res.status(400).send({ error: 'Já existe um prato com esse nome' });
   }
 
   // Verifica se a nova categoria existe
-  let category = findCategoryByName(categoryName);
-  if (!category) {
+  let categoryName = findCategoryByName(category);
+  if (!categoryName) {
     return res.status(404).send({ error: 'Categoria não encontrada' });
   }
 
@@ -64,7 +68,7 @@ pratos.put('/:id', (req, res) => {
   dish.name = name;
   dish.description = description || dish.description; // Mantém a descrição atual se não for fornecida
   dish.ingredients = ingredients || dish.ingredients; // Mantém os ingredientes atuais se não forem fornecidos
-  dish.category = categoryName; // Atualiza o ID da categoria
+  dish.category = category; // Atualiza o ID da categoria
 
   res.status(200).send(dish);
 });
@@ -72,24 +76,50 @@ pratos.put('/:id', (req, res) => {
 
 // Rota para adicionar um prato
 pratos.post('/', (req, res) => {
-  const { name, description, categoryName, ingredients } = req.body;
-
+  const { name, description, category, ingredients, rating, views } = req.body;
+  const namelength = name?.length;
   // Validações
-  if (!name || !categoryName) {
+  if (!name && !category) {
     return res.status(400).send({ error: 'Nome do prato e nome da categoria são obrigatórios' });
   }
 
+  if (!name) {
+    return res.status(400).send({ error: 'Nome do prato é obrigatório' });
+  }
+
+  if (namelength < 2){
+    return res.status(400).send({ error: 'Nome do prato deve ter pelo menos 2 caracteres' });
+  }
+
+  if (namelength > 50){
+    return res.status(400).send({ error: 'Nome do prato não pode ter mais que 50 caracteres' });
+  }
+  
+  if (parseFloat(rating) < 0 || parseFloat(rating) > 5){
+    return res.status(400).send({ error: 'Rating deve ser entre 0 e 5' });
+  }
+
+  if (parseFloat(views) < 0 ){
+    return res.status(400).send({ error: 'Views não pode ser negativo' });
+  }
+
+  if (ingredients.length == 0 || !ingredients){
+    return res.status(400).send({ error: 'Ingredientes são obrigatórios' });
+  }
+
+
+
   const dishExists = dishes.some(dish => dish.name.toLowerCase() === name.toLowerCase());
   if (dishExists) {
-    return res.status(409).send({ error: 'Já existe um prato com esse nome' });
+    return res.status(400).send({ error: 'Já existe um prato com esse nome' });
   }
 
   // Verifica se a categoria já existe
-  let category = findCategoryByName(categoryName);
+  let categoryName = findCategoryByName(category);
 
   // Se a categoria não existir, mandar erro.
-  if (!category) {
-    return res.status(409).send({error: 'Essa categoria não existe.'})
+  if (!categoryName) {
+    return res.status(400).send({error: 'Categoria não encontrada'})
   }
 
   // Cria o novo prato
@@ -98,11 +128,10 @@ pratos.post('/', (req, res) => {
     id: nextDishId++,
     name,
     description: description || '',
-    category: categoryName, // Associa o prato à categoria
+    category: category, // Associa o prato à categoria
     ingredients: ingredients || [],
-    rating: 0.0,
-    views: 0
-
+    rating: rating || 0,
+    views: views || 0
   };
 
   dishes.push(newDish);
@@ -119,6 +148,13 @@ pratos.delete('/:id', (req, res) => {
     res.status(404).send({ error: 'Prato não encontrado' });
   }
 });
+
+
+// pratos.post('/reset', (req, res) => {
+//   dishes = initialdishes;
+//   nextDishId = 9;
+//   res.status(200).send(dishes);
+// });
 
 
 module.exports = pratos;
