@@ -21,6 +21,8 @@ app.use('/search', buscasRouter);
 app.use('/most-viewed', mostViewedRouter);
 app.use('/news', newsRouter);
 app.use('/users', usersRouter);
+
+
 //app.use('/reviews', reviewsRouter);
 //app.use("/relatorios", relatoriosRoutes); // Adicionando a rota ao servidor
 

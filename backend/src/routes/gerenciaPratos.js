@@ -22,6 +22,32 @@ pratos.get('/', (req, res) => {
 });
 
 
+pratos.get('/best-rated', (req, res) => {
+  const pratosOrdenados = dishes.sort((a, b) => b.rating - a.rating);
+  
+  const melhoresPratos = pratosOrdenados.slice(0, 5);
+
+  res.send(melhoresPratos);
+});
+
+pratos.get('/best-rated/:number', (req, res) => {
+  const number = parseInt(req.params.number, 10); // Obtém o número da URL e converte para inteiro
+
+  if (isNaN(number) || number < 1 || number > 5) {
+    return res.status(400).send({ error: "A posição deve estar entre 1 e 5" });
+  }
+
+  const pratosOrdenados = [...dishes].sort((a, b) => b.rating - a.rating); // Ordena por rating
+  const pratoSelecionado = pratosOrdenados[number - 1]; // Pega o prato na posição desejada
+
+  if (!pratoSelecionado) {
+    return res.status(404).send({ error: "Nenhum prato encontrado para essa posição" });
+  }
+
+  res.send(pratoSelecionado);
+});
+
+
 // Rota para obter detalhes de um prato
 pratos.get('/:id', (req, res) => {
   const dish = dishes.find(d => d.id === parseInt(req.params.id));
@@ -33,6 +59,7 @@ pratos.get('/:id', (req, res) => {
     res.status(400).send({ error: 'Prato não encontrado' });
   }
 });
+
 
 // Rota para editar um prato
 pratos.put('/:id', (req, res) => {

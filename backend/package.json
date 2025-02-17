@@ -9,7 +9,6 @@
     "test": "env-cmd -f .env.test jest --verbose --coverage  --config ./jest.config.js --detectOpenHandles",
     "prettier": "prettier --write 'src/**/*.{ts,js}'",
     "lint": "eslint '**/*.ts' --report-unused-disable-directives --max-warnings 0 --fix",
-    "prepare": "husky install",
     "test:cucumber": "cucumber-js --require tests/steps_definitions --require tests/support"
   },
   "keywords": [],
@@ -18,6 +17,7 @@
   "dependencies": {
     "axios": "^1.7.9",
     "chai": "^4.5.0",
+    "backend-nodejs-ess": "file:",
     "cors": "^2.8.5",
     "env-cmd": "^10.1.0",
     "express": "^4.21.2",

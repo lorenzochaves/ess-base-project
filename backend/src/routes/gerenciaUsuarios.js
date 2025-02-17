@@ -1,6 +1,3 @@
-// npx concurrently "npm run start" "npx cucumber-js --require tests/steps_definitions/deletar_usuario.steps.js tests/features/deletar_usuario.feature"
-// npx cucumber-js --require tests/steps_definitions/deletar_usuario.steps.js tests/features/deletar_usuario.feature
-
 const express = require('express');
 const usuarios = express.Router();
 const { users } = require('../database/users_list.js');
@@ -81,18 +78,4 @@ usuarios.put('/:id', (req, res) => {
   res.status(200).send(user);
 });
 
-
-usuarios.delete('/:id', (req, res) => {
-  const userId = parseInt(req.params?.id);
-
-  const userIndex = users.findIndex(d => d.id === userId);
-  if (userIndex !== -1) {
-    users.splice(userIndex, 1);
-    res.status(200).send({message: 'Usuário deletado com sucesso'});
-  } else {
-    res.status(404).send({message: 'Usuário não encontrado'});
-  }
-  
-});
-
- module.exports = usuarios;
+module.exports = usuarios;
