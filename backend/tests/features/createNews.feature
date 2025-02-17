@@ -150,16 +150,16 @@ Feature: Criar Notícias
 
   Scenario: Excluir uma notícia com sucesso
     Given existe uma noticia cadastrada no sistema com ID "1"
-    When o usuario faz uma requisição DELETE para "news/1"
+    When o usuario faz uma requisição DELETE para "/news/1"
     Then o sistema retorna um status code 200
     And a resposta contera uma mensagem "Notícia deletada com sucesso."
 
   Scenario: Tentar excluir uma notícia que nao existe
-    When o usuario faz uma requisição DELETE para "news/866"
+    When o usuario faz uma requisição DELETE para "/news/866"
     Then o sistema retorna um status code 404
     And a resposta contera uma mensagem de erro "Notícia não encontrada"
 
   Scenario: Tentar excluir uma notícia co ID invalido
-    When o usuario faz uma requisição DELETE para "news/alo"
+    When o usuario faz uma requisição DELETE para "/news/alo"
     Then o sistema retorna um status code 400
     And a resposta contera uma mensagem de erro "ID inválido"
