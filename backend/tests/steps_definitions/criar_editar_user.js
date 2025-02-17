@@ -63,7 +63,6 @@ Then('o JSON da resposta deve conter nome {string}, login {string}, senha {strin
   expect(response.body).to.have.property('nome', nome);
   expect(response.body).to.have.property('login', login);
   expect(response.body).to.have.property('senha', senha);
-
 });
 
 Then('o JSON deve conter message: {string}', function (error) {

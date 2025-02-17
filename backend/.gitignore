@@ -34,3 +34,5 @@ lib/
 
 # Deploy
 .vercel
+
+package-lock.json
