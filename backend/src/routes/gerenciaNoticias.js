@@ -28,7 +28,6 @@ router.get('/:id', (req, res) => {
 });
 
 // Rota para criar uma nova notícia
-// Rota para criar uma nova notícia
 router.post('/', (req, res) => {
   const { title, subtitle, body } = req.body;
 
