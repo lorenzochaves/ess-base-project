@@ -1,4 +1,4 @@
-let usuarios = [
+let users = [
     {
         id: 1,
         nome: "João Silva",
