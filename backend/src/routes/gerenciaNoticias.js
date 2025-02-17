@@ -2,32 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { news } = require('../database/noticias.js'); // Importa o array de notícias
 
-let nextNewsId = 5; // Próximo ID para novas notícias
+let nextNewsId = 3; // Próximo ID para novas notícias
 
 // Função para validar se o ID é um número válido
 const isValidId = (id) => !isNaN(id) && Number.isInteger(parseFloat(id));
 
 // Função para encontrar uma notícia pelo ID
 const findNewsById = (id) => news.find(n => n.id === parseInt(id));
-
-// Função para validar os campos da notícia
-const validateNews = (title, subtitle, body) => {
-  const errors = [];
-
-  if (!title || title.length > 100) {
-    errors.push('O título é obrigatório e deve ter no máximo 100 caracteres.');
-  }
-
-  if (!subtitle || subtitle.length > 100) {
-    errors.push('O subtítulo é obrigatório e deve ter no máximo 100 caracteres.');
-  }
-
-  if (!body || body.length > 1000) {
-    errors.push('O corpo da notícia é obrigatório e deve ter no máximo 1000 caracteres.');
-  }
-
-  return errors;
-};
 
 // Rota para listar todas as notícias
 router.get('/', (req, res) => {
@@ -48,18 +29,27 @@ router.get('/:id', (req, res) => {
 
 // Rota para criar uma nova notícia
 router.post('/', (req, res) => {
-  const { title, subtitle, body, publicationDate } = req.body;
+  const { title, subtitle, body } = req.body;
 
   // Validações
-  const errors = validateNews(title, subtitle, body);
-  if (errors.length > 0) {
-    return res.status(400).send({ errors });
+  if (!title || title.length > 50) {
+    return res.status(400).send({ error: 'O título é obrigatório e deve ter no máximo 50 caracteres.' });
   }
 
-  // Verifica se a data de publicação foi fornecida
-  if (!publicationDate) {
-    return res.status(400).send({ error: 'A data de publicação é obrigatória.' });
+  if (!subtitle || subtitle.length > 100) {
+    return res.status(400).send({ error: 'O subtítulo é obrigatório e deve ter no máximo 100 caracteres.' });
   }
+
+  if (!body || body.length > 250) {
+    return res.status(400).send({ error: 'O corpo da notícia é obrigatório e deve ter no máximo 250 caracteres.' });
+  }
+
+  // Gera a data atual no formato "ano-mês-dia"
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Mês é base 0, então adicionamos 1
+  const day = String(now.getDate()).padStart(2, '0');
+  const publicationDate = `${year}-${month}-${day}`; // Formato "YYYY-MM-DD"
 
   // Cria a nova notícia
   const newNews = {
@@ -67,7 +57,8 @@ router.post('/', (req, res) => {
     title,
     subtitle,
     body,
-    publicationDate
+    publicationDate, // Data no formato "ano-mês-dia"
+    views: 0
   };
 
   news.push(newNews);
@@ -87,19 +78,25 @@ router.put('/:id', (req, res) => {
     return res.status(404).send({ error: 'Notícia não encontrada' });
   }
 
-  const { title, subtitle, body, publicationDate } = req.body;
+  const { title, subtitle, body } = req.body;
 
   // Validações
-  const errors = validateNews(title, subtitle, body);
-  if (errors.length > 0) {
-    return res.status(400).send({ errors });
+  if (!title || title.length > 50) {
+    return res.status(400).send({ error: 'O título é obrigatório e deve ter no máximo 50 caracteres.' });
+  }
+
+  if (!subtitle || subtitle.length > 100) {
+    return res.status(400).send({ error: 'O subtítulo é obrigatório e deve ter no máximo 100 caracteres.' });
+  }
+
+  if (!body || body.length > 250) {
+    return res.status(400).send({ error: 'O corpo da notícia é obrigatório e deve ter no máximo 250 caracteres.' });
   }
 
   // Atualiza a notícia
   noticia.title = title;
   noticia.subtitle = subtitle;
   noticia.body = body;
-  noticia.publicationDate = publicationDate || noticia.publicationDate; // Mantém a data atual se não for fornecida
 
   res.status(200).send(noticia);
 });
