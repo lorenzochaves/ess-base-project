@@ -3,3 +3,5 @@ __pycache__/
 
 *.log
 *.swp
+node_modules/
+package-lock.json
