@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/lorenzochaves/ess-base-project/issues"
   },
-  "homepage": "https://github.com/lorenzochaves/ess-base-project#readme"
+  "homepage": "https://github.com/lorenzochaves/ess-base-project#readme",
+  "dependencies": {
+    "chai": "^4.5.0",
+    "ess-base-project": "file:"
+  }
 }
