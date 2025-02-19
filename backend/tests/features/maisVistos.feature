@@ -205,14 +205,14 @@ Funcionalidade: Busca de itens no menu
 Context:
     E que o sistema possui os seguintes pratos cadastrados maisVistos:
       | nome                  | categoria  | nota | visualizacoes | descricao                                                        |
-      | Frango à Parmegiana  | Aves       | 4.2  | 1000         | Filé de frango empanado coberto com molho de tomate e queijo    |
-      | Lasanha de Carne     | Italiana   | 4.5  | 376          | Camadas de massa intercaladas com molho de carne e queijo        |
-      | Salada Caesar        | Saladas    | 4.0  | 500          | Salada clássica com alface, croutons e molho Caesar             |
-      | Sushi Variado        | Japonês    | 4.8  | 253          | Seleção de sushi com peixes frescos e arroz temperado           |
+      | Frango à Parmegiana  | Aves       | 4.2  | 1005        | Filé de frango empanado coberto com molho de tomate e queijo    |
+      | Lasanha de Carne     | Italiana   | 4.5  | 385          | Camadas de massa intercaladas com molho de carne e queijo        |
+      | Salada Caesar        | Saladas    | 4.0  | 503          | Salada clássica com alface, croutons e molho Caesar             |
+      | Sushi Variado        | Japonês    | 4.8  | 256          | Seleção de sushi com peixes frescos e arroz temperado           |
       | Feijoada            | Brasileira | 4.7  | 250          | Prato tradicional brasileiro com feijão preto e carnes          |
       | Risoto de Cogumelos | Italiana   | 4.3  | 145          | Risoto cremoso preparado com cogumelos frescos                  |
       | Tacos de Carne      | Carnes Premium    | 4.1  | 12           | Tortilhas de milho recheadas com carne temperada                |
-      | Bolo de Chocolate   | Sobremesas | 4.6  | 925          | Bolo macio e úmido com cobertura de chocolate 
+      | Bolo de Chocolate   | Sobremesas | 4.6  | 930          | Bolo macio e úmido com cobertura de chocolate 
       
 
  
@@ -224,11 +224,11 @@ Cenário: Listar os pratos mais vistos
     Então a resposta deve ser "200" maisVisto
     E a resposta deve conter os pratos ordenados por visualizações em ordem decrescente:
       | nome                  | visualizacoes |
-      | Frango à Parmegiana  | 1000         |
-      | Bolo de Chocolate    | 925          |
-      | Salada Caesar        | 500          |
-      | Lasanha de Carne     | 376          |
-      | Sushi Variado        | 253          |
+      | Frango à Parmegiana  | 1005         |
+      | Bolo de Chocolate    | 930          |
+      | Salada Caesar        | 503          |
+      | Lasanha de Carne     | 385          |
+      | Sushi Variado        | 256          |
       | Feijoada            | 250          |
       | Risoto de Cogumelos | 145          |
       | Tacos de Carne      | 12           |
@@ -240,12 +240,12 @@ Cenário: Listar os pratos mais vistos após adicionar um novo prato
     Então a resposta deve ser "200" maisVisto
     E a resposta deve conter os pratos ordenados por visualizações em ordem decrescente:
       | nome                  | visualizacoes |
-      | Frango à Parmegiana  | 1000         |
-      | Bolo de Chocolate    | 925          |
+      | Frango à Parmegiana  | 1005        |
+      | Bolo de Chocolate    | 930          |
       | Pizza Margherita     | 800          |
-      | Salada Caesar        | 500          |
-      | Lasanha de Carne     | 376          |
-      | Sushi Variado        | 253          |
+      | Salada Caesar        | 503          |
+      | Lasanha de Carne     | 385          |
+      | Sushi Variado        | 256          |
       | Feijoada            | 250          |
       | Risoto de Cogumelos | 145          |
       | Tacos de Carne      | 12           | 
@@ -257,11 +257,11 @@ Cenário: Listar os pratos mais vistos após remover um prato
     Então a resposta deve ser "200" maisVisto
     E a resposta deve conter os pratos ordenados por visualizações em ordem decrescente:
       | nome                  | visualizacoes |
-      | Frango à Parmegiana  | 1000         |
-      | Bolo de Chocolate    | 925          |
-      | Salada Caesar        | 500          |
-      | Lasanha de Carne     | 376          |
-      | Sushi Variado        | 253          |
+      | Frango à Parmegiana  | 1005        |
+      | Bolo de Chocolate    | 930          |
+      | Salada Caesar        | 503          |
+      | Lasanha de Carne     | 385          |
+      | Sushi Variado        | 256          |
       | Feijoada            | 250          |
       | Risoto de Cogumelos | 145          |
       | Tacos de Carne      | 12           | 

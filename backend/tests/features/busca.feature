@@ -38,7 +38,7 @@ Feature: Busca de itens no menu
   @busca
   Scenario: Filtrar pratos sem retorno de resultados
     Given que não existem pratos cadastrados que atendam aos filtros aplicados
-    When eu faço uma requisição GET para "/search?category=Café da manhã&minNota=5" na busca
+    When eu faço uma requisição GET para "/search?minNota=5" na busca
     Then devo receber uma mensagem "Nenhum prato encontrado com esses filtros"
     And o código de status das respostas deve ser 404
 

@@ -70,7 +70,7 @@ Given('que o prato {string} foi adicionado ao sistema com {int} visualizações'
     const newDish = {
         name: nomePrato,
         description: 'Descrição do novo prato',
-        categoryName: 'Italiana',
+        category: 'Italiana',
         ingredients: ['ingrediente1', 'ingrediente2'],
         views: visualizacoes // Passa o número de visualizações customizado
     };
@@ -109,6 +109,7 @@ Then('a resposta deve conter uma lista vazia', { tags: '@maisVisto' }, async fun
                 description: prato.description,
                 categoryName: prato.category,
                 ingredients: prato.ingredients || [],
+                rating: prato.rating || [],
                 views: prato.views, // Mantém o número de visualizações original
             });
     }

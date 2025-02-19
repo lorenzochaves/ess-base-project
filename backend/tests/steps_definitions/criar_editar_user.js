@@ -54,7 +54,7 @@ When('esta requisição for enviada para {string}', async function (path) {
   // Isso já foi definido nas requisições acima, portanto, não é necessário aqui.
 });
 
-Then('o status da resposta deve ser {string}', function (status) {
+Then('o statuscode deve ser {string}', function (status) {
   expect(response.status).to.equal(parseInt(status, 10));
 });
 
@@ -65,7 +65,7 @@ Then('o JSON da resposta deve conter nome {string}, login {string}, senha {strin
   expect(response.body).to.have.property('senha', senha);
 });
 
-Then('o JSON deve conter message: {string}', function (error) {
+Then('o JSON deve ser {string}', function (error) {
   expect(response.body).to.have.property('error', error);
 });
 
@@ -75,6 +75,3 @@ Then('o JSON da resposta deve conter id {int} com nome {string}, login {string}'
   expect(response.body).to.have.property('login', login);
 });
 
-Then('o JSON deve conter a message {string}', function (message) {
-  expect(response.body).to.have.property('error', message);
-});

@@ -7,7 +7,7 @@ const expect = chai.expect;
 
 let response;
 
-Given('que existem pratos cadastrados na categoria {string}', function (categoria) {
+Given('que há pratos cadastrados na categoria {string}', function (categoria) {
   // Simulação de pré-condição
 });
 
@@ -19,13 +19,13 @@ Given('que existem conteúdos adicionados recentemente', function () {
   // Simulação de pré-condição
 });
 
-When('eu faço uma requisição GET para {string}', async function (endpoint) {
+When('uma requisicao GET é feita para {string}', async function (endpoint) {
   response = await request(app)
     .get(endpoint)
     .set('Accept', 'application/json');
 });
 
-Then('o código de status da resposta deve ser {string}', function (status) {
+Then('o código da resposta deve ser {string}', function (status) {
   expect(response.status).to.equal(parseInt(status));
 });
 

@@ -27,7 +27,7 @@ Given('que existem conteúdos com alta visualização e interação de todos os 
 });
 
 // Passos de When
-When('eu faço uma requisição GET para {string}', async function (endpoint) {
+When('faço uma requisição GET para {string}', async function (endpoint) {
   response = await request(app)
     .get(endpoint)
     .set('Accept', 'application/json');

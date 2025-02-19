@@ -6,11 +6,11 @@ Feature: Exclusão de Usuários
     Scenario: Exclusão de usuário com sucesso
         Given O administrador quer deletar um cadastro no sistema
         When uma requisição DELETE for enviada para "/users/1"
-        Then o status da resposta deve ser "200"
+        Then o statusCode deverá ser "200"
         And o JSON deve conter a message "Usuário deletado com sucesso"
 
     Scenario: Tentativa de exclusão de usuário inexistente
         Given O administrador quer deletar um cadastro no sistema
         When uma requisição DELETE for enviada para "/users/999"
-        Then o status da resposta deve ser "404"
+        Then o statusCode deverá ser "404"
         And o JSON deve conter a message "Usuário não encontrado"

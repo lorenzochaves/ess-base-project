@@ -2,8 +2,8 @@
 
 Funcionalidade: Gerenciamento de Categorias
   Como um administrador do sistema
-  Eu quero poder gerenciar as categorias do cardápio
-  Para manter o menu organizado
+  Eu quero criar, editar e detelar as categorias do sistema
+  Para manter o menu organizado e atualizado
 
   # Cenários de Listagem
   Cenário: Listar todas as categorias

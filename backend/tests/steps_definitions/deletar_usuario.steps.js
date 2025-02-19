@@ -18,7 +18,7 @@ When('uma requisição DELETE for enviada para {string}', async function (url) {
   }
 });
 
-Then('o status da resposta deve ser {string}', function (statusCode) {
+Then('o statusCode deverá ser {string}', function (statusCode) {
   expect(response.status).to.equal(parseInt(statusCode));
 });
 

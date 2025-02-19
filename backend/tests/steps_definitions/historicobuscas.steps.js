@@ -107,7 +107,7 @@ Then('os pratos devem atender a todos os critérios', function () {
   });
 });
 
-Then('a mensagem de erro deve ser {string}', function (mensagem) {
+Then('a mensagem de erro será {string}', function (mensagem) {
   expect(response.body.error).to.equal(mensagem);
 });
 

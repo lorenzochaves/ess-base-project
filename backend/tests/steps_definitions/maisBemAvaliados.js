@@ -20,7 +20,7 @@ When('uma requisição GET for enviada para {string}', async function (endpoint)
     .set('Accept', 'application/json');
 });
 
-Then('o status da resposta deve ser {string}', function (status) {
+Then('o status deve ser {string}', function (status) {
   expect(response.status).to.equal(parseInt(status, 10));
 });
 
@@ -51,7 +51,7 @@ When('uma requisição GET for enviada para o endereço {string}', async functio
     .set('Accept', 'application/json');
 });
 
-Then('o status da resposta deve ser {string} e ser aceito', function (status) {
+Then('o status deve ser {string} e ser aceito', function (status) {
   expect(response.status).to.equal(parseInt(status, 10));
 });
 
@@ -73,7 +73,7 @@ When('uma requisição GET for enviada para o endpoint {string}', async function
     .set('Accept', 'application/json');
 });
 
-Then('o status da resposta deve ser {string} por hora', function (status) {
+Then('o status deve ser {string} por hora', function (status) {
   expect(response.status).to.equal(parseInt(status, 10));
 });
 

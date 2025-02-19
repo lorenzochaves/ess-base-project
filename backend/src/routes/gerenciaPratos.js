@@ -6,7 +6,6 @@ let { dishes } = require('../database/pratos.js');
 const { categories } = require('../database/categorias.js');
 const { randomInt } = require('crypto');
 
-let initialdishes = dishes;
 let nextDishId = 9;
 
 // Função para encontrar uma categoria pelo nome

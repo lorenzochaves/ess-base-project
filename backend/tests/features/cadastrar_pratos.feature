@@ -48,17 +48,19 @@ Funcionalidade: Cadastro de Pratos
 
   # Cenários de Criação
   Cenário: Criar prato com sucesso
-    Quando eu faço uma requisição POST para "/dishes" com os dados:
-      | name        | Frango Dobroo Parmegiana |
-      | description | Filé de frango empanado coberto com molho de tomate e queijo derretido. |
+    Dado que eu sou um administrador do sistema
+    Quando uma requisição POST é feita para "/dishes" com os dados:
+      | name        | Arroz Queimado |
+      | description | Arroz queimado na tijela suja |
       | category    | Aves |
-      | ingredients | frango, farinha de rosca, ovos, molho de tomate, queijo muçarela |
-      | rating      | 4.2 |
-      | views       | 1000 |
-    Então o código de status da resposta deve ser 201
-    E a resposta deve conter um prato com nome "Frango Dobroo Parmegiana"
+      | ingredients | farinha de rosca, ovos, molho de tomate, queijo muçarela |
+      | rating      | 3.1 |
+      | views       | 2 |
+    Então o código da resposta deverá ser 201
+    E a resposta deve conter um prato com nome "Arroz Queimado"
 
   Cenário: Criar prato sem nome
+    Dado que eu sou um administrador do sistema
     Quando eu faço uma requisição POST para "/dishes" com os dados:
       | description | Filé de frango empanado coberto com molho de tomate e queijo derretido. |
       | category    | Aves |
@@ -69,6 +71,7 @@ Funcionalidade: Cadastro de Pratos
     E a resposta deve conter a mensagem de erro "Nome do prato é obrigatório"
 
   Cenário: Criar prato com nome muito curto
+    Dado que eu sou um administrador do sistema
     Quando eu faço uma requisição POST para "/dishes" com os dados:
       | name        | A |
       | description | Filé de frango empanado coberto com molho de tomate e queijo derretido. |
@@ -80,6 +83,7 @@ Funcionalidade: Cadastro de Pratos
     E a resposta deve conter a mensagem de erro "Nome do prato deve ter pelo menos 2 caracteres"
 
   Cenário: Criar prato com nome muito longo
+    Dado que eu sou um administrador do sistema
     Quando eu faço uma requisição POST para "/dishes" com os dados:
       | name        | Esta é uma descrição extremamente longa para o nome de um prato e não deveria ser aceita. |
       | description | Filé de frango empanado coberto com molho de tomate e queijo derretido. |
@@ -91,6 +95,7 @@ Funcionalidade: Cadastro de Pratos
     E a resposta deve conter a mensagem de erro "Nome do prato não pode ter mais que 50 caracteres"
 
   Cenário: Criar prato com categoria inexistente
+    Dado que eu sou um administrador do sistema
     Quando eu faço uma requisição POST para "/dishes" com os dados:
       | name        | Doritos com carne |
       | description | Tortilhas de milho recheadas com carne temperada e acompanhamentos. |
@@ -102,6 +107,7 @@ Funcionalidade: Cadastro de Pratos
     E a resposta deve conter a mensagem de erro "Categoria não encontrada"
 
   Cenário: Criar prato com rating inválido
+    Dado que eu sou um administrador do sistema
     Quando eu faço uma requisição POST para "/dishes" com os dados:
       | name        | Banoffee |
       | description | Bolo macio e úmido com cobertura de chocolate. |
@@ -113,6 +119,7 @@ Funcionalidade: Cadastro de Pratos
     E a resposta deve conter a mensagem de erro "Rating deve ser entre 0 e 5"
 
   Cenário: Criar prato com views inválido
+    Dado que eu sou um administrador do sistema
     Quando eu faço uma requisição POST para "/dishes" com os dados:
       | name        | Sushi de Feijao |
       | description | Seleção de sushi com peixes frescos e feijao temperado. |
@@ -123,8 +130,8 @@ Funcionalidade: Cadastro de Pratos
     Então o código de status da resposta deve ser 400
     E a resposta deve conter a mensagem de erro "Views não pode ser negativo"
 
-
   Cenário: Criar prato com ingredientes vazios
+    Dado que eu sou um administrador do sistema
     Quando eu faço uma requisição POST para "/dishes" com os dados:
       | name        | Lasanha de Jaca |
       | description | Camadas de massa intercaladas com molho de jaca e queijo. |
@@ -136,11 +143,13 @@ Funcionalidade: Cadastro de Pratos
     E a resposta deve conter a mensagem de erro "Ingredientes são obrigatórios"
 
   Cenário: Buscar prato por ID
+    Dado que eu sou um administrador do sistema
     Quando eu faço uma requisição GET para "/dishes/1"
     Então o código de status da resposta deve ser 200
     E a resposta deve conter os dados do prato
 
   Cenário: Buscar prato por ID inválido
+    Dado que eu sou um administrador do sistema
     Quando eu faço uma requisição GET para "/dishes/14"
     Então o código de status da resposta deve ser 400
     E a resposta deve conter a mensagem de erro "Prato não encontrado"
