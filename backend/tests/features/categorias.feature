@@ -20,17 +20,20 @@ Funcionalidade: Gerenciamento de Categorias
     E o código de status da resposta deve ser 200
 
   Cenário: Buscar uma categoria inexistente
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição GET para "/categories/999"
     Então o código de status da resposta deve ser 404
     E a resposta deve conter a mensagem de erro "Categoria não encontrada"
 
   Cenário: Buscar categoria com ID inválido
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição GET para "/categories/abc"
     Então o código de status da resposta deve ser 400
     E a resposta deve conter a mensagem de erro "ID inválido"
 
   # Cenários de Criação
   Cenário: Criar uma nova categoria com sucesso
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição POST para "/categories" com os dados:
       | name        | Vegana         |
       | description | Pratos veganos |
@@ -38,12 +41,14 @@ Funcionalidade: Gerenciamento de Categorias
     E a resposta deve conter uma categoria com nome "Vegana"
 
   Cenário: Tentar criar categoria sem nome
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição POST para "/categories" com os dados:
       | description | Pratos veganos |
     Então o código de status da resposta deve ser 400
     E a resposta deve conter a mensagem de erro "Nome da categoria é obrigatório"
 
   Cenário: Tentar criar categoria com nome muito curto
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição POST para "/categories" com os dados:
       | name        | A            |
       | description | Descrição    |
@@ -51,6 +56,7 @@ Funcionalidade: Gerenciamento de Categorias
     E a resposta deve conter a mensagem de erro "Nome deve ter pelo menos 2 caracteres"
 
   Cenário: Tentar criar categoria com nome muito longo
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição POST para "/categories" com os dados:
       | name        | Esta é uma categoria com um nome extremamente longo que não deveria ser aceito pelo sistema |
       | description | Descrição    |
@@ -66,6 +72,7 @@ Funcionalidade: Gerenciamento de Categorias
     E a resposta deve conter a mensagem de erro "Categoria já existe"
 
   Cenário: Tentar criar categoria com descrição muito longa
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição POST para "/categories" com os dados:
       | name        | Teste |
       | description | Esta é uma descrição extremamente longa que ultrapassa o limite máximo permitido pelo sistema. Precisamos garantir que as descrições sejam concisas e objetivas para manter a qualidade dos dados. Por isso, deve-se tentar novamente o processo!!! |
@@ -82,6 +89,7 @@ Funcionalidade: Gerenciamento de Categorias
     E a resposta deve conter uma categoria com nome "Carnes Premium"
 
   Cenário: Tentar atualizar categoria inexistente
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição PUT para "/categories/999" com os dados:
       | name        | Teste     |
       | description | Descrição |
@@ -97,6 +105,7 @@ Funcionalidade: Gerenciamento de Categorias
     E a resposta deve conter a mensagem de erro "Já existe uma categoria com esse nome"
 
   Cenário: Tentar atualizar categoria com nome vazio
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição PUT para "/categories/1" com os dados:
       | name        |           |
       | description | Descrição |
@@ -111,6 +120,7 @@ Funcionalidade: Gerenciamento de Categorias
     Então o código de status da resposta deve ser 204
 
   Cenário: Tentar deletar categoria inexistente
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição DELETE para "/categories/999"
     Então o código de status da resposta deve ser 404
     E a resposta deve conter a mensagem de erro "Categoria não encontrada"
@@ -123,11 +133,13 @@ Funcionalidade: Gerenciamento de Categorias
     E a resposta deve conter a mensagem de erro "Não é possível excluir: categoria está vinculada a pratos"
 
   Cenário: Tentar deletar categoria com ID inválido
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição DELETE para "/categories/abc"
     Então o código de status da resposta deve ser 400
     E a resposta deve conter a mensagem de erro "ID inválido"
 
   Cenário: Buscar categoria com caracteres especiais no ID
+    Dado que existem categorias cadastradas no sistema
     Quando eu faço uma requisição GET para "/categories/@#$"
     Então o código de status da resposta deve ser 400
     E a resposta deve conter a mensagem de erro "ID inválido"
